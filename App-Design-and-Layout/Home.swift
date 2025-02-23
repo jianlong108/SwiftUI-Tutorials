@@ -21,7 +21,8 @@ struct CategoryHome: View {
     
     @State var showingProfile = false
     @EnvironmentObject var userData: UserData
-    
+
+    //https://juejin.cn/post/6844904058130530317 为什么 SwiftUI 用 “some View” 作为视图类型?
     var profileButton: some View {
         Button(action: { self.showingProfile.toggle() }) {
             Image(systemName: "person.crop.circle")
@@ -30,32 +31,50 @@ struct CategoryHome: View {
                 .padding()
         }
     }
-
     var body: some View {
-        NavigationView {
-            List {
-                FeaturedLandmarks(landmarks: featured)
-                    .scaledToFill()
-                    .frame(height: 200)
-                    .clipped()
+        TabView {
+            NavigationView {
+                List {
+                    FeaturedLandmarks(landmarks: featured)
+                        .scaledToFill()
+                        .frame(height: 200)
+                        .clipped()
+                        .listRowInsets(EdgeInsets())
+
+                    ForEach(categories.keys.sorted(), id: \.self) { key in
+                        CategoryRow(categoryName: key, items: self.categories[key]!)
+                    }
                     .listRowInsets(EdgeInsets())
-                
-                ForEach(categories.keys.sorted(), id: \.self) { key in
-                    CategoryRow(categoryName: key, items: self.categories[key]!)
+
+                    NavigationLink(destination: LandmarkList()) {
+                        Text("See All")
+                    }
                 }
-                .listRowInsets(EdgeInsets())
-                
-                NavigationLink(destination: LandmarkList()) {
-                    Text("See All")
+                .navigationBarTitle(Text("Featured"))
+                .navigationBarItems(trailing: profileButton)
+                .sheet(isPresented: $showingProfile) {
+                    ProfileHost()
+                        .environmentObject(self.userData)
                 }
             }
-            .navigationBarTitle(Text("Featured"))
-            .navigationBarItems(trailing: profileButton)
-            .sheet(isPresented: $showingProfile) {
-                ProfileHost()
-                    .environmentObject(self.userData)
+            .tabItem {
+                Image(systemName: "star.fill")
+                Text("Featured")
             }
+
+            // 在这里可以添加更多的 Tab 视图
+            LandmarkList()
+                .tabItem {
+                    Image(systemName: "list.bullet")
+                    Text("All Landmarks")
+                }
+            Setting()
+                .tabItem {
+                    Image(systemName: "calendar.and.person")
+                    Text("设置")
+                }
         }
+
     }
 }
 
