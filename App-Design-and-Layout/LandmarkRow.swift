@@ -11,19 +11,20 @@ struct LandmarkRow: View {
     var landmark: Landmark
 
     var body: some View {
-        HStack {
-            landmark.image
-                .resizable()
-                .frame(width: 50, height: 50)
-            Text(verbatim: landmark.name)
-            Spacer()
-
-            if landmark.isFavorite {
-                Image(systemName: "star.fill")
-                    .imageScale(.medium)
-                    .foregroundColor(.yellow)
-            }
-        }
+        Text("\(landmark.name)")
+//        HStack {
+//            landmark.image
+//                .resizable()
+//                .frame(width: 50, height: 50)
+//            Text(verbatim: landmark.name)
+//            Spacer()
+//
+//            if landmark.isFavorite {
+//                Image(systemName: "star.fill")
+//                    .imageScale(.medium)
+//                    .foregroundColor(.yellow)
+//            }
+//        }.background(Color.blue)
     }
 }
 

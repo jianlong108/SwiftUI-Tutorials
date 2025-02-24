@@ -13,14 +13,27 @@ struct Setting: View {
             List {
                 NavigationLink(destination: LoginView()) {
                     Image(systemName: "person.crop.circle.badge.questionmark.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 28, height: 28)
                     Text("登录")
                 }.frame(height: 40)
 
-                HStack {
+//                HStack {
+//                    Image(systemName: "questionmark.circle.fill")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 28, height: 28)
+//                    Text("关于")
+//                    Spacer()
+//                    Image(systemName: "arrow.right")
+//                }.frame(height: 40)
+                NavigationLink(destination: LoginView()) {
                     Image(systemName: "questionmark.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 28, height: 28)
                     Text("关于")
-                    Spacer()
-                    Image(systemName: "arrow.right")
                 }.frame(height: 40)
 
             }

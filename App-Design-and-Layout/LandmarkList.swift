@@ -18,6 +18,7 @@ struct LandmarkList: View {
             
             ForEach(userData.landmarks) { landmark in
                 if !self.userData.showFavoritesOnly || landmark.isFavorite {
+                    // 如果没有被包装到NavigationView 则被显示为不可用状态
                     NavigationLink(
                         destination: LandmarkDetail(landmark: landmark)
                             .environmentObject(self.userData)
@@ -27,13 +28,13 @@ struct LandmarkList: View {
                 }
             }
         }
-//        .navigationBarTitle(Text("Landmarks"))
+        .navigationBarTitle(Text("Landmarks"))
     }
 }
 
 struct LandmarksList_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(["iPhone SE", "iPhone XS Max"], id: \.self) { deviceName in
+        ForEach(["iPhone 16 Pro"], id: \.self) { deviceName in
             NavigationView {
                 LandmarkList()
             }
